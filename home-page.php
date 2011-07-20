@@ -6,14 +6,16 @@
 
 get_header(); ?>
 	<div id="home-nav">
-		<nav id="home-access" role="navigation">
+		<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+		<!--<nav id="home-access" role="navigation">
 			<ul>
 				<li><a>WHY SCHECHTER</a></li>
 				<li><a>FIND A SCHOOL</a></li>
 				<li><a>ABOUT THE NETWORK</a></li>
 				<li><a>NEWS</a></li>
 			</ul>
-		</nav><!-- #home-access -->
+		</nav>-->
+		<!-- #home-access -->
 		<div id="rotate-carousel" class="slider-wrap"><ul class="slider slider-1">
 			<?php
 

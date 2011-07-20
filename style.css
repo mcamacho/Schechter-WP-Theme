@@ -111,7 +111,7 @@ body {
 #home-nav {
     /*clear:both;*/
 }
-#home-access {
+body.home div.menu-main-menu-container {
     float:left;
     width:250px;
 }
@@ -293,7 +293,7 @@ ul.slider-numbers-0, ul.slider-numbers-1{
 /* WIdgets
 */
 
-#supplementary aside {
+footer#colophon #supplementary aside ,
+body.home #supplementary aside {
     float:left;
-    width: 200px;
 }
