@@ -80,18 +80,20 @@ body {
 #access div {
 	margin: 0 7.6%;
 }
+
 #primary {
-	float: left;
-	margin: 0 -26.4% 0 0;
+	float: right;
+	margin: 0 0 0 -26.4%;
 	width: 100%;
 }
 #content {
-	margin: 0 34% 0 7.6%;
+	margin: 0 7.6% 0 34%;
 	width: 58.4%;
 }
 #secondary {
-	float: right;
-	margin-right: 7.6%;
+	float: left;
+	margin-left: 7.6%;
+	margin-right: 0;
 	width: 18.8%;
 }
 
