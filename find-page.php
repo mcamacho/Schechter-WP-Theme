@@ -17,11 +17,39 @@ get_header(); ?>
 
 				<?php
 				//display the search results when variables on $_get url appears	
-				if ( isset($_GET['state_id'])) :
+				if ( isset($_GET['state_id']) || isset($_GET['zip_code']) ) :
 				
 					global $wpdb;
 					
-					if ( ! empty($_GET['grade_id']) ) {
+					if ( ! empty($_GET['state_id']) ) {
+						$state = $_GET['state_id'];
+						//make the query
+						$the_query = $wpdb->get_results(
+								"SELECT *
+								FROM wp_dbt_schools
+								WHERE state = $state");	
+					}
+					
+					elseif ( ! empty($_GET['zip_code']) &&  ! empty($_GET['grade_id']) ) {echo ("both");
+						$zip = substr($_GET['zip_code'],0,1);
+						//search for states relative to the first digit of the zip code
+						$state_query = $wpdb->get_results(
+							"SELECT stateID
+							FROM wp_dbt_states
+							WHERE zip1d = $zip");
+						//construct the query based in the state_query
+						$grade = $_GET['grade_id'];
+						$query_string = 'SELECT * FROM wp_dbt_schools WHERE lower_grade_level <= ' . $grade . ' AND upper_grade_level >= ' . $grade;
+						$query_string = $query_string . ' AND (state = 0';
+						foreach( $state_query as $state_id ) :
+							$query_string = $query_string . ' OR state = ' . $state_id->stateID;
+						endforeach;
+						$query_string = $query_string . ')';
+						//make the query
+						$the_query = $wpdb->get_results($query_string);
+					}
+					
+					elseif ( ! empty($_GET['grade_id']) ) {
 						$grade = $_GET['grade_id'];
 						//search for school grades
 						$the_query = $wpdb->get_results(
@@ -48,16 +76,10 @@ get_header(); ?>
 						$the_query = $wpdb->get_results($query_string);	
 					}
 					
-					elseif ( ! empty($_GET['state_id']) ) {
-						$state = $_GET['state_id'];
-						//make the query
-						$the_query = $wpdb->get_results(
-								"SELECT *
-								FROM wp_dbt_schools
-								WHERE state = $state");	
-					}
 					
 					//schools list results layout
+					echo '<h1>RESULTS</h1>';
+					if (count($the_query)):
 					foreach( $the_query as $post_results ) :
 						//db queries for state abbrev and grade levels
 						$state_name = $wpdb->get_var("SELECT abbrev FROM wp_dbt_states WHERE stateID = $post_results->state");
@@ -78,7 +100,9 @@ get_header(); ?>
 						 
 						echo $re_html ;
 					endforeach;
-					
+					else:
+						echo '<blockquote>no results for your search</blockquote>';
+					endif;
 					echo '<br /><a href="' . get_site_url() . '/?p=' . get_the_ID() . '" >New Search</a>';
 					
 				else :
@@ -86,36 +110,23 @@ get_header(); ?>
 				?>
 				
 				<div id="search-map">
-					<span>Search in the map</span><br />
+					<h1>SEARCH BY GEOGRAPHIC LOCATION:</h1>
+					<span>Select a state or province on the map below</span><br />
 					<?php include('inc/usa.php') ?>
 				</div><!-- #search-map -->
 				
 				<div id="search-options">
-					
+					<h1>SEARCH BY ZIP CODE AND GRADE LEVEL:</h1>
+					<span>Enter your zip code and a grade level below.</span><br/>
 					<form>
-					
-					<span>Select a State</span>
-					<select id="state_id" name="state_id" >
-						<option value="">Select</option>					
-						<?php
-						global $wpdb;
-						$the_query = $wpdb->get_results("SELECT abbrev, stateID
-										FROM wp_dbt_states");
-						foreach( $the_query as $post_results ) :
-						echo '<option value="' . $post_results->stateID . '" >';
-						echo $post_results->abbrev . '</option>' ;
-						endforeach;
-						?>
-					</select><br />
-					<span> or </span><br />
-					
+						
 					<label for="zip_code">Enter Zip Code</label>
 					<input name="zip_code" id="zip_code" type="text" /><br />
 					<span> or </span><br />
 					
 					<span>Select a Grade Level</span>
 					<select id="grade_id" name="grade_id" >
-						<option value="">Select</option>					
+						<option value="">Any</option>					
 						<?php
 						global $wpdb;
 						$the_query = $wpdb->get_results("SELECT *
