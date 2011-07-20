@@ -24,9 +24,9 @@ get_header(); ?>
 			$no_carousel_images = false;
 			while ( $the_query->have_posts() ) : $the_query->the_post();
 				if($post->post_excerpt == 'Carousel') :
-					echo '<li><a href="">';
-					echo  '<img src="' . $post->guid . '" alt="" />';
-					echo '</a></li>';
+					echo '<li><img src="' . $post->guid . '" alt="" />';
+					echo '<hgroup><h1>' . $post->post_title . '</h1>';
+					echo '<h2>' . $post->post_content . '</h2></hgroup></li>';
 					$no_carousel_images = true;
 				endif;
 			endwhile;
