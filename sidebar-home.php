@@ -15,10 +15,8 @@
 		return;
 	// If we get this far, we have widgets. Let do this.
 ?>
-<div id="supplementary" <?php twentyeleven_footer_sidebar_class(); ?>>
-
-	<div id="first" class="widget-area" role="complementary">
-		<?php dynamic_sidebar( 'sidebar-home' ); ?>
-	</div><!-- #first .widget-area -->
+<div id="supplementary">
+	
+	<?php dynamic_sidebar( 'sidebar-home' ); ?>
 
 </div><!-- #supplementary -->

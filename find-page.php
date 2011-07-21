@@ -25,12 +25,12 @@ get_header(); ?>
 						$state = $_GET['state_id'];
 						//make the query
 						$the_query = $wpdb->get_results(
-								"SELECT *
-								FROM wp_dbt_schools
-								WHERE state = $state");	
+							"SELECT *
+							FROM wp_dbt_schools
+							WHERE state = $state");	
 					}
 					
-					elseif ( ! empty($_GET['zip_code']) &&  ! empty($_GET['grade_id']) ) {echo ("both");
+					elseif ( ! empty($_GET['zip_code']) &&  ! empty($_GET['grade_id']) ) {
 						$zip = substr($_GET['zip_code'],0,1);
 						//search for states relative to the first digit of the zip code
 						$state_query = $wpdb->get_results(
@@ -39,7 +39,9 @@ get_header(); ?>
 							WHERE zip1d = $zip");
 						//construct the query based in the state_query
 						$grade = $_GET['grade_id'];
-						$query_string = 'SELECT * FROM wp_dbt_schools WHERE lower_grade_level <= ' . $grade . ' AND upper_grade_level >= ' . $grade;
+						$query_string = 'SELECT * FROM wp_dbt_schools
+								WHERE lower_grade_level <= ' . $grade
+								. ' AND upper_grade_level >= ' . $grade;
 						$query_string = $query_string . ' AND (state = 0';
 						foreach( $state_query as $state_id ) :
 							$query_string = $query_string . ' OR state = ' . $state_id->stateID;
@@ -103,7 +105,7 @@ get_header(); ?>
 					else:
 						echo '<blockquote>no results for your search</blockquote>';
 					endif;
-					echo '<br /><a href="' . get_site_url() . '/?p=' . get_the_ID() . '" >New Search</a>';
+					echo '<a href="' . get_site_url() . '/?p=' . get_the_ID() . '" >New Search</a>';
 					
 				else :
 				//display the search alternatives
@@ -111,20 +113,19 @@ get_header(); ?>
 				
 				<div id="search-map">
 					<h1>SEARCH BY GEOGRAPHIC LOCATION:</h1>
-					<span>Select a state or province on the map below</span><br />
+					<p>Select a state or province on the map below.</p>
 					<?php include('inc/usa.php') ?>
 				</div><!-- #search-map -->
 				
 				<div id="search-options">
 					<h1>SEARCH BY ZIP CODE AND GRADE LEVEL:</h1>
-					<span>Enter your zip code and a grade level below.</span><br/>
-					<form>
-						
-					<label for="zip_code">Enter Zip Code</label>
-					<input name="zip_code" id="zip_code" type="text" /><br />
-					<span> or </span><br />
+					<p>Enter your zip code and a grade level below.</p>
 					
-					<span>Select a Grade Level</span>
+					<form>
+					<p>Enter Zip Code <input name="zip_code" id="zip_code" type="text" /></p>
+					<span> and/or </span>
+					
+					<p>Select a Grade Level
 					<select id="grade_id" name="grade_id" >
 						<option value="">Any</option>					
 						<?php
@@ -136,10 +137,9 @@ get_header(); ?>
 						echo $post_results->label . '</option>' ;
 						endforeach;
 						?>
-					</select><br />
+					</select></p>
 					
 					<input type="submit" value="submit" />
-					
 					</form>
 					
 				</div><!-- #search-options -->

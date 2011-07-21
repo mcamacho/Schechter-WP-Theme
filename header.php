@@ -51,7 +51,7 @@
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
 <![endif]-->
-<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+<?php wp_enqueue_script("jquery"); ?>
 <?php
 	/* We add some JavaScript to pages with the comment form
 	 * to support sites with threaded comments (when in use).
@@ -71,28 +71,21 @@
 <body <?php body_class(); ?>>
 <div id="page" class="hfeed">
 	<header id="branding" role="search">
-		<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span>
-		</h1>
+		<h1 id="site-title">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
+		</h1><!-- #site-title -->
+		
 		<div id="top-head">
-			<nav id="top-menu" role="navigation">
-				<a href="#" title="twitter link">T</a>		
-				<a href="#" title="facebook link">F</a>
-				<a href="#" title="Login link">LOGIN</a>
-				<a href="#" title="twitter link">CONTACT US</a>
-			</nav><!-- #access -->
-			<?php
-				// Has the text been hidden?
-				if ( 'blank' == get_header_textcolor() ) :
-			?>
-				<div class="only-search<?php if ( ! empty( $header_image ) ) : ?> with-image<?php endif; ?>">
-				<?php get_search_form(); ?>
-				</div>
-			<?php
-				else :
-			?>
-				<?php get_search_form(); ?>
-			<?php endif; ?>
-		</div>
+			<nav role="navigation">
+				<ul id="top-menu">
+					<li id="tt-icon"><a href="#" title="twitter link"></a></li>	
+					<li id="fb-icon"><a href="#" title="facebook link"></a></li>
+					<li><a href="#" title="Login link">LOGIN</a></li>
+					<li><a href="#" title="twitter link">CONTACT US</a></li>
+				</ul><!-- #top-menu -->
+			</nav>
+			<?php get_search_form(); ?>
+		</div><!-- #top-head -->
 	</header><!-- #branding -->
 
 

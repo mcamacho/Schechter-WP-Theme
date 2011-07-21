@@ -185,6 +185,9 @@ body, input, textarea {
 body {
 	background: #e2e2e2;
 }
+a {
+    text-decoration:none;
+}
 #page {
 	background: #fff;
 }
@@ -200,9 +203,10 @@ body {
 }
 #site-title a{
     display:block;
-    height:100px;
-    width:250px;
-    background-color:#cccccc;
+    height:98px;
+    width:266px;
+    text-indent:-1000px;
+    background:url(./images/schechter-logo.gif) no-repeat center;
 }
 
 #top-head {
@@ -216,6 +220,23 @@ body {
 #top-menu {
     float:left;
     margin-right:30px;
+}
+#top-menu li{
+    float:left;
+    margin:0 8px;
+}
+
+#tt-icon a,
+#fb-icon a{
+    display:block;
+    height:31px;
+    width:31px;
+}
+#tt-icon a{
+    background:url(./images/tt.gif) no-repeat center;
+}
+#fb-icon a{
+    background:url(./images/fb.gif) no-repeat center;
 }
 
 #searchform {

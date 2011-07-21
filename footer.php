@@ -10,12 +10,12 @@
 	</div><!-- #main -->
 
 	<footer id="colophon" role="contentinfo">
+		
+		<?php get_sidebar( 'footer' ); ?>
+		
+		<div style="clear:left"></div>
 
-			<?php
-				get_sidebar( 'footer' );
-			?>
 	</footer><!-- #colophon -->
-	<div style="clear:left"></div>
 </div><!-- #page -->
 
 <?php wp_footer(); ?>
