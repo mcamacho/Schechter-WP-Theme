@@ -15,7 +15,7 @@
 		return;
 	// If we get this far, we have widgets. Let do this.
 ?>
-<div id="supplementary">
+<div id="supplementary" class="footer-widgets" >
 	
 	<?php dynamic_sidebar( 'sidebar-home' ); ?>
 

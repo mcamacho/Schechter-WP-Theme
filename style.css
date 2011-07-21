@@ -172,6 +172,17 @@ body.home #content header{
     display:none;
 }
 
+#supplementary.footer-widgets aside {
+    float:left;
+    width:210px;
+    overflow:hidden;
+    margin:0 10px;
+}
+#supplementary.footer-widgets aside a{
+    display:block;
+    height:100px;
+    overflow:hidden;
+}
 
 /* =Global
 ----------------------------------------------- */
@@ -253,25 +264,9 @@ a {
 /* =Footer Menu
 -------------------------------------------------------------- */
 
-#footer-access {
+footer#colophon ul.menu li {
 	float: left;
-}
-#footer-access ul {
-	font-size: 13px;
-	list-style: none;
-	margin: 0 0 0 -0.8125em;
-	padding-left: 0;
-}
-#footer-access li {
-	float: left;
-	position: relative;
-}
-#footer-access a {
-	color: #333;
-	display: block;
-	line-height: 3.333em;
-	padding: 0 1.2125em;
-	text-decoration: none;
+        margin:0 5px;
 }
 
 /*
@@ -313,8 +308,3 @@ ul.slider-numbers-0, ul.slider-numbers-1{
 
 /* WIdgets
 */
-
-footer#colophon #supplementary aside ,
-body.home #supplementary aside {
-    float:left;
-}
