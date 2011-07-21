@@ -10,31 +10,36 @@ get_header(); ?>
 			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 			
 			<div id="rotate-carousel" class="slider-wrap"><ul class="slider slider-1">
-				<?php
-	
-				// The Query
-				$the_query = new WP_Query( array( 'post_status' => 'any', 'post_type' => 'attachment') );
-				
-				// The Loop
-				$no_carousel_images = false;
-				while ( $the_query->have_posts() ) : $the_query->the_post();
-					if($post->post_excerpt == 'Carousel') :
-						echo '<li><img src="' . $post->guid . '" alt="" />';
-						echo '<hgroup><h1>' . $post->post_title . '</h1>';
-						echo '<h2>' . $post->post_content . '</h2></hgroup></li>';
-						$no_carousel_images = true;
-					endif;
-				endwhile;
-				if ( ! $no_carousel_images || ! $the_query->have_posts()) :
-					echo '<li><a href="">';
-					echo  '<img src="' . get_stylesheet_directory_uri() . '/images/home-default.jpg" alt="" />';
-					echo '</a></li>';
-				endif;	
-				// Reset Post Data
-				wp_reset_postdata();
-				
-				?>
-				
+				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
+					$args = array(
+					  'post_type' => 'attachment',
+					  'numberposts' => -1,
+					  'post_status' => null,
+					  'post_mime_type' => 'image',
+					  'orderby' => 'menu_order',
+					  'order' => 'ASC',
+					  );
+					
+					$attachments = get_posts($args);
+					$carousel_images = false;
+					if ($attachments) : 
+						foreach ($attachments as $attachment) :
+							//Loop through attachements (images)
+							if($attachment->post_excerpt == 'Carousel') :
+								echo '<li><img src="' . $attachment->guid . '" alt="" />';
+								echo '<hgroup><h1>' . $attachment->post_title . '</h1>';
+								echo '<h2>' . $attachment->post_content . '</h2></hgroup></li>';
+								$carousel_images = true;
+							endif;
+							//End loop through attachements
+						endforeach;
+					endif ;
+					if ( ! $attachments || ! $carousel_images ) :
+						echo '<li><img src="' . get_stylesheet_directory_uri() . '/images/home-default.jpg" alt="" />';
+						echo '<hgroup><h1>Schechter Network</h1>';
+						echo '<h2>Welcome to a place</h2></hgroup></li>';
+					endif ;
+					endwhile; endif; ?>
 			</ul></div><!-- #rotate-carousel -->
 		</div><!-- #home-nav -->
 		<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/jquery.rotator.min.js"></script>
